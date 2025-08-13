@@ -1,4 +1,4 @@
-﻿namespace Houston.Database.Entities;
+﻿namespace TicketBot.Database.Entities;
 
 public class User
 {

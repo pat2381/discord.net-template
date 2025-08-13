@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Houston.Bot.Common;
+namespace TicketBot.Common;
 
 public class Permissions
 {

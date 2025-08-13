@@ -1,6 +1,6 @@
 ﻿using Discord;
 
-namespace Houston.Bot.Components
+namespace TicketBot.Components
 {
 	public class ButtonComponents
 	{

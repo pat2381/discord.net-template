@@ -7,7 +7,7 @@ using Microsoft.VisualBasic;
 using Discord;
 using System.Reflection;
 
-namespace Houston.Bot.Services;
+namespace TicketBot.Services;
 
 public class BotService : DiscordShardedClientService
 {

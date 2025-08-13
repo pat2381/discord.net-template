@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Houston.Database.Migrations
+namespace TicketBot.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +14,9 @@ namespace Houston.Database.Migrations
                 name: "ReputationMembers",
                 columns: table => new
                 {
-                    GuildId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    MemberId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    Reputation = table.Column<long>(type: "bigint", nullable: false)
+                    GuildId = table.Column<ulong>(type: "INTEGER", nullable: false),
+                    MemberId = table.Column<ulong>(type: "INTEGER", nullable: false),
+                    Reputation = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +27,7 @@ namespace Houston.Database.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<decimal>(type: "numeric(20,0)", nullable: false)
+                    UserId = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

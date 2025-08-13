@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 
-namespace Houston.Bot.Services;
+namespace TicketBot.Services;
 
 public class Logger<T> : ILogger<T>
 {
@@ -19,7 +19,7 @@ public class Logger<T> : ILogger<T>
 
 	IDisposable ILogger.BeginScope<TState>(TState state)
 	{
-		return _logger.BeginScope(state);
+		return Task.FromResult(_logger.BeginScope(state));
 	}
 
 	bool ILogger.IsEnabled(LogLevel logLevel)
@@ -27,8 +27,9 @@ public class Logger<T> : ILogger<T>
 		return _logger.IsEnabled(logLevel);
 	}
 
-	void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
-	{
-		_logger.Log(logLevel, eventId, state, exception, formatter);
-	}
+    void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+    {
+        // Wrap the formatter to match the expected nullability of Exception?
+        _logger.Log(logLevel, eventId, state, exception, (s, e) => formatter(s, e!));
+    }
 }

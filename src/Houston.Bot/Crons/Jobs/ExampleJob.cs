@@ -1,12 +1,12 @@
 ﻿using Quartz;
 using System;
 using System.Threading.Tasks;
-using Houston.Bot.Common;
+using TicketBot.Common;
 using Microsoft.Extensions.Logging;
 using Discord.WebSocket;
-using Houston.Bot.Services;
+using TicketBot.Services;
 
-namespace Houston.Bot.Crons.Jobs;
+namespace TicketBot.Crons.Jobs;
 
 [DisallowConcurrentExecution]
 public class ExampleJob : IJob

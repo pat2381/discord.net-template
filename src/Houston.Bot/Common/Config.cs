@@ -1,4 +1,4 @@
-﻿namespace Houston.Bot.Common
+﻿namespace TicketBot.Common
 {
 	public static class Config
 	{

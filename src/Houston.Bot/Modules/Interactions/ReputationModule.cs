@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Houston.Database;
-using Houston.Database.Extensions;
+using TicketBot.Database;
+using TicketBot.Database.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Houston.Bot.Modules.Interactions;
+namespace TicketBot.Modules.Interactions;
 
 [Group("reputation", "User Repuations")]
 public class ReputationGroupModule : InteractionsBase

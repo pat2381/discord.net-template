@@ -1,13 +1,13 @@
 ﻿using Quartz;
 using Quartz.Impl;
-using Houston.Bot.Crons;
+using TicketBot.Crons;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz.Spi;
 using System;
 
-namespace Houston.Bot.Services;
+namespace TicketBot.Services;
 
 public class JobSchedulerService
 {

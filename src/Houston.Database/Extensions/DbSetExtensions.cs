@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Houston.Database.Entities.Base;
-using Houston.Database.Entities;
+using TicketBot.Database.Entities.Base;
+using TicketBot.Database.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace Houston.Database.Extensions;
+namespace TicketBot.Database.Extensions;
 
 public static class DbSetExtensions
 {

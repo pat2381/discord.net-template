@@ -1,44 +1,54 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Houston.Bot.Common;
-using Houston.Bot.Components;
-using Houston.Database;
-using Houston.Database.Extensions;
+using TicketBot.Common;
+using TicketBot.Components;
+using TicketBot.Database;
+using TicketBot.Database.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Houston.Bot.Modules.Interactions;
+namespace TicketBot.Modules.Interactions;
 
 public class GeneralModule : InteractionsBase
 {
 	public GeneralModule() { }
 
 	[SlashCommand("ping", "Display bot latency")]
-	public async Task LatencyAsync()
-	{
-		await DeferAsync();
+    public async Task LatencyAsync()
+    {
+        await DeferAsync();
 
-		var message = await FollowupAsync("📡 Ping 1");
+        var message = await FollowupAsync("📡 Ping 1");
 
-		await message.ModifyAsync(x => x.Content = "📡 Ping 2");
-		var latency = (message.CreatedAt.Millisecond - message.EditedTimestamp.Value.Millisecond);
+        await message.ModifyAsync(x => x.Content = "📡 Ping 2");
+        var latency = 0;
+        if (message.EditedTimestamp.HasValue)
+        {
+            latency = message.CreatedAt.Millisecond - message.EditedTimestamp.Value.Millisecond;
+        }
 
-		while (latency < 0)
-		{
-			var initLat = (message.EditedTimestamp.Value.Millisecond);
-			await message.ModifyAsync(x => x.Content = "Another ping???");
-			var finalLat = (message.EditedTimestamp.Value.Millisecond);
-			latency = (finalLat - initLat);
-		}
+        while (latency < 0)
+        {
+            if (message.EditedTimestamp.HasValue)
+            {
+                var initLat = message.EditedTimestamp.Value.Millisecond;
+                await message.ModifyAsync(x => x.Content = "Another ping???");
+                if (message.EditedTimestamp.HasValue)
+                {
+                    var finalLat = message.EditedTimestamp.Value.Millisecond;
+                    latency = (finalLat - initLat);
+                }
+            }
+        }
 
-		await message.ModifyAsync(x =>
-		{
-			x.Content = $"⏱️ Message Latency: {latency}\n🛰️ Websocket Latency: {Context.Client.Latency}";
-		});
-	}
+        await message.ModifyAsync(x =>
+        {
+            x.Content = $"⏱️ Message Latency: {latency}\n🛰️ Websocket Latency: {Context.Client.Latency}";
+        });
+    }
 
 	[SlashCommand("about", "Info about our service")]
 	public async Task About()
@@ -48,7 +58,7 @@ public class GeneralModule : InteractionsBase
 		var shard = Context.Client.GetShardFor(Context.Guild).ShardId;
 
 		var AboutButtons = new ActionRowBuilder()
-			.AddComponent(ButtonComponents.LinkButton("Support Server", Config.SupportServer));
+			.AddComponent((IMessageComponentBuilder)ButtonComponents.LinkButton("Support Server", Config.SupportServer));
 
 		var actionRow = new ComponentBuilder()
 			.AddRow(AboutButtons)

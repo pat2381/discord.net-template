@@ -1,12 +1,12 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Houston.Bot.Common;
+using TicketBot.Common;
 
-namespace Houston.Bot.Preconditions
+namespace TicketBot.Preconditions
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    class RequirePermissionsAttribute : Discord.Interactions.PreconditionAttribute
+    class RequirePermissionsAttribute : PreconditionAttribute
     {
         private readonly GuildPermission[] _permissions;
 
@@ -15,18 +15,18 @@ namespace Houston.Bot.Preconditions
             _permissions = permissions;
         }
 
-        public async override Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, Discord.Interactions.ICommandInfo commandInfo, IServiceProvider services)
+        public override Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, ICommandInfo commandInfo, IServiceProvider services)
         {
             if (context.Guild == null)
             {
-                return PreconditionResult.FromError("This command can only be executed from within server channels.");
+                return Task.FromResult(PreconditionResult.FromError("This command can only be executed from within server channels."));
             }
 
             var user = context.User as SocketGuildUser;
 
             if (user == null)
             {
-                return PreconditionResult.FromError("This command can only be executed in a server.");
+                return Task.FromResult(PreconditionResult.FromError("This command can only be executed in a server."));
             }
 
             var missingPermissions = _permissions
@@ -36,10 +36,10 @@ namespace Houston.Bot.Preconditions
             if (missingPermissions.Any() && !Config.Admins.Contains(user.Id.ToString()))
             {
                 var missingPermissionNames = string.Join(", ", missingPermissions.Select(permission => permission.ToString()));
-                return PreconditionResult.FromError($"You must have the following permissions to run this command: {missingPermissionNames}");
+                return Task.FromResult(PreconditionResult.FromError($"You must have the following permissions to run this command: {missingPermissionNames}"));
             }
 
-            return PreconditionResult.FromSuccess();
+            return Task.FromResult(PreconditionResult.FromSuccess());
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Spi;
 
-namespace Houston.Bot.Crons;
+namespace TicketBot.Crons;
 
 public class JobFactory : IJobFactory
 {
@@ -18,19 +18,19 @@ public class JobFactory : IJobFactory
 		_serviceProvider = serviceProvider;
 	}
 
-	public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
-	{
-		var jobDetail = bundle.JobDetail;
-		var jobType = jobDetail.JobType;
-		var jobInstance = _serviceProvider.GetService(jobType);
+    public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
+    {
+        var jobDetail = bundle.JobDetail;
+        var jobType = jobDetail.JobType;
+        var jobInstance = _serviceProvider.GetService(jobType);
 
-		if (jobInstance == null || !(jobInstance is IJob))
-		{
-			throw new SchedulerException($"Failed to create job of type {jobType.FullName}");
-		}
+        if (jobInstance == null || !(jobInstance is IJob))
+        {
+            throw new SchedulerException($"Failed to create job of type {jobType.FullName}");
+        }
 
-		return jobInstance as IJob;
-	}
+        return (IJob)jobInstance;
+    }
 
 	public void ReturnJob(IJob job)
 	{

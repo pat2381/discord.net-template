@@ -1,10 +1,10 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Houston.Bot.Common;
+using TicketBot.Common;
 
 
-namespace Houston.Bot.Preconditions
+namespace TicketBot.Preconditions
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 	public class RequireBotAdminAttribute : PreconditionAttribute

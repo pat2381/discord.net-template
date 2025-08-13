@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Houston.Database.Entities;
-using Houston.Database.Entities.Base;
+using TicketBot.Database.Entities;
+using TicketBot.Database.Entities.Base;
 
-namespace Houston.Database.Extensions;
+namespace TicketBot.Database.Extensions;
 
 internal static class ModelBuilderExtensions
 {

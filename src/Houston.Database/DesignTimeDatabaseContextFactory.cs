@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Houston.Database;
+namespace TicketBot.Database;
 
 public class DesignTimeDatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
 {

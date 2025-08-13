@@ -1,9 +1,9 @@
-﻿using Houston.Bot.Crons.Jobs;
-using Houston.Bot.Services;
+﻿using TicketBot.Crons.Jobs;
+using TicketBot.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
-namespace Houston.Bot.Crons;
+namespace TicketBot.Crons;
 
 public class ScheduleJobs
 {

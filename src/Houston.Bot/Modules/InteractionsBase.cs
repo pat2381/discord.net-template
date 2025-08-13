@@ -1,6 +1,6 @@
 ﻿using Discord.Interactions;
 
-namespace Houston.Bot.Modules
+namespace TicketBot.Modules
 {
 	public abstract class InteractionsBase : InteractionModuleBase<ShardedInteractionContext>
 	{

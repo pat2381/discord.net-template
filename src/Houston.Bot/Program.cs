@@ -1,24 +1,25 @@
 ﻿using Discord;
+using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Houston.Bot.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Quartz;
+using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Serilog;
-using Houston.Database;
-using Discord.Addons.Hosting;
-using Microsoft.Extensions.Logging;
-using Houston.Bot.Crons;
-using Quartz;
-using Houston.Bot.Crons.Jobs;
+using TicketBot.Crons;
+using TicketBot.Crons.Jobs;
+using TicketBot.Database;
+using TicketBot.Database.Entities;
+using TicketBot.Services;
 
-namespace Houston.Bot;
+namespace TicketBot;
 
 internal static class Program
 {
@@ -28,10 +29,6 @@ internal static class Program
 			.UseSystemd()
 			.UseSerilog()
 			.ConfigureServices(ConfigureServices)
-			.ConfigureDiscordShardedHost((context, config) =>
-			{
-				config.Token = Environment.GetEnvironmentVariable("TOKEN");
-			})
 			.ConfigureLogging((context, logging) =>
 			{
 				logging.ClearProviders();
@@ -75,12 +72,40 @@ internal static class Program
 
 	private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
 	{
-		services.AddSingleton(typeof(Microsoft.Extensions.Logging.ILogger<>), typeof(Services.Logger<>));
+        var botOptions = context.Configuration.GetSection("Bot").Get<BotOptions>() ?? new BotOptions();
+        services.AddSingleton(typeof(ILogger<>), typeof(Services.Logger<>));
 
-		services.AddDbContext<DatabaseContext>();
+		services.AddDbContext<DatabaseContext>(option =>
+		{
+			option.UseSqlite($"Data Source={botOptions.DbPath}");
+        });
+        services.AddDiscordShardedHost((config, _) =>
+        {
+            config.SocketConfig = new DiscordSocketConfig
+            {
+                LogLevel = LogSeverity.Verbose,
+                AlwaysDownloadUsers = true,
+                MessageCacheSize = 200,
+				GatewayIntents = GatewayIntents.Guilds
+                            | GatewayIntents.GuildMessages
+                            | GatewayIntents.DirectMessages
+                            | GatewayIntents.GuildMessageReactions
+                            | GatewayIntents.MessageContent
+							| GatewayIntents.GuildMembers
+            };
 
-		services.AddSingleton<InteractionService>();
-		services.AddSingleton<CommandService>();
+            config.Token = botOptions.Token;
+        });
+
+        services.AddInteractionService((config, _) =>
+        {
+            config.LogLevel = LogSeverity.Info;
+            config.UseCompiledLambda = true;
+			
+        });
+
+        //services.AddSingleton<InteractionService>();
+		//services.AddSingleton<CommandService>();
 		services.AddHostedService<InteractionHandlingService>();
 		services.AddHostedService<CommandHandlingService>();
 

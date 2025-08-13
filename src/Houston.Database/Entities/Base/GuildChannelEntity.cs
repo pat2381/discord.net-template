@@ -1,4 +1,4 @@
-﻿namespace Houston.Database.Entities.Base;
+﻿namespace TicketBot.Database.Entities.Base;
 
 public class GuildChannelEntity
 {

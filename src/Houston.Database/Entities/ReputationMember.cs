@@ -1,6 +1,6 @@
-﻿using Houston.Database.Entities.Base;
+﻿using TicketBot.Database.Entities.Base;
 
-namespace Houston.Database.Entities;
+namespace TicketBot.Database.Entities;
 
 public class ReputationMember : MemberEntity
 {

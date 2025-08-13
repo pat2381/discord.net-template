@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Houston.Database.Entities;
-using Houston.Database.Extensions;
+using TicketBot.Database.Entities;
+using TicketBot.Database.Extensions;
 using System;
 
-namespace Houston.Database;
+namespace TicketBot.Database;
 
 public class DatabaseContext : DbContext
 {
@@ -15,13 +15,13 @@ public class DatabaseContext : DbContext
 
 	public DatabaseContext(IConfiguration configuration)
 	{
-		_connectionString = Environment.GetEnvironmentVariable("DATABASE") ?? configuration["profiles:Houston.Bot:environmentVariables:DATABASE"];
+		_connectionString = Environment.GetEnvironmentVariable("DATABASE") ?? configuration["Bot:DbPath"];
 
 	}
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options)
 	{
-		options.UseNpgsql(_connectionString);
+		options.UseSqlite($"Data Source={_connectionString}");
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

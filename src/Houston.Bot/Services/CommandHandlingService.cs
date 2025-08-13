@@ -1,4 +1,4 @@
-﻿using Houston.Bot.Common;
+﻿using TicketBot.Common;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Houston.Bot.Services;
+namespace TicketBot.Services;
 
 public class CommandHandlingService : DiscordShardedClientService
 {

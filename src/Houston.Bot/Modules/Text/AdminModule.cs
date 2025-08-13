@@ -1,9 +1,9 @@
 ﻿using Discord;
 using Discord.Commands;
-using Houston.Bot.Preconditions;
-using Houston.Bot.Common;
+using TicketBot.Preconditions;
+using TicketBot.Common;
 
-namespace Houston.Bot.Modules.Text;
+namespace TicketBot.Modules.Text;
 
 public class AdminModule : ModuleBase<ShardedCommandContext>
 {

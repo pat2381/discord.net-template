@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 
-namespace Houston.Bot.Common;
+namespace TicketBot.Common;
 
 public class GenerateMessage
 {
