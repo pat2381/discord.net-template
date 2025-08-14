@@ -392,3 +392,7 @@ FodyWeavers.xsd
 # Secrets
 launchSettings.json
 .env
+/src/Houston.Bot/appsettings.json
+/.gitignore
+/.gitignore
+/src/Houston.Bot/appsettings.json
